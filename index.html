@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alina Emelianova</title>
+  <meta name="description" content="Alina Emelianova, postdoctoral research associate at Princeton University working on molecular dynamics, free energy calculations, force field development, and QM/MM methods." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='70' font-size='64' text-anchor='middle' fill='%237a2e3a' font-family='Georgia' font-style='italic'>A</text></svg>" />
+  <style>
+    :root {
+      --bg: #fcfbf8;
+      --text: #1f1d1a;
+      --muted: #6b665e;
+      --rule: #e3dfd6;
+      --accent: #7a2e3a;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #161514;
+        --text: #e9e5dd;
+        --muted: #9d978c;
+        --rule: #2f2d2a;
+        --accent: #d49aa3;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    /* Background artwork: sketched atoms, orbitals & bonds behind the page */
+    .bg {
+      position: fixed; inset: 0; z-index: -1;
+      width: 100vw; height: 100vh;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .bg svg { width: 100%; height: 100%; display: block; }
+    .bg .ink { stroke: var(--accent); fill: none; }
+    .bg .ink-fill { fill: var(--accent); stroke: none; }
+    .bg .node { fill: none; stroke: var(--text); }
+    .bg .sketch { stroke-linecap: round; stroke-linejoin: round; }
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+    a:hover { border-bottom-color: currentColor; }
+    h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; }
+
+    .page { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    nav { padding: 36px 0 0; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 26px; justify-content: flex-end; }
+    nav a { color: var(--muted); font-size: 0.9rem; letter-spacing: 0.04em; }
+    nav a:hover { color: var(--accent); }
+
+    header { padding: 96px 0 64px; }
+    header h1 { font-size: clamp(3rem, 8vw, 4.4rem); line-height: 1.05; letter-spacing: -0.01em; }
+    header .role { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.45rem; color: var(--muted); margin-top: 12px; }
+    header .intro { margin-top: 36px; max-width: 600px; }
+    header .quick { margin-top: 28px; font-size: 0.95rem; color: var(--muted); }
+    header .quick a { margin-right: 4px; }
+    .sep { color: var(--rule); margin: 0 10px; }
+
+    section { padding: 56px 0; border-top: 1px solid var(--rule); }
+    section h2 {
+      font-size: 0.82rem; font-family: "Source Serif 4", Georgia, serif; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 30px;
+    }
+    section p + p { margin-top: 18px; }
+
+    dl.facts { display: grid; grid-template-columns: 170px 1fr; gap: 12px 24px; margin-top: 32px; font-size: 0.97rem; }
+    dl.facts dt { color: var(--muted); font-style: italic; }
+
+    .entries { display: grid; gap: 36px; }
+    .entry h3 { font-size: 1.6rem; line-height: 1.2; }
+    .entry .meta { font-size: 0.9rem; color: var(--muted); font-style: italic; margin: 2px 0 10px; }
+    .steps { font-size: 0.95rem; color: var(--muted); margin-top: 10px; }
+    .entry h4 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 1.25rem; margin: 26px 0 6px; }
+    .entry .refs { font-size: 0.88rem; color: var(--muted); margin-top: 6px; }
+    .entry .refs a { color: var(--muted); border-bottom: 1px dotted var(--rule); }
+    .entry .refs a:hover { color: var(--accent); }
+
+    figure { margin: 22px 0 6px; }
+    figure img {
+      display: block; width: 100%; height: auto; background: #fff;
+      border: 1px solid var(--rule); padding: 10px;
+    }
+    figcaption { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 8px; line-height: 1.5; }
+    .figs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 26px; }
+    .figs figure { margin: 0; }
+    .figs img { aspect-ratio: 16 / 10; object-fit: contain; }
+    @media (max-width: 600px) { .figs { grid-template-columns: 1fr; } }
+
+    ul.plain { list-style: none; }
+    ul.plain li { padding: 10px 0; border-bottom: 1px dotted var(--rule); }
+    ul.plain li:last-child { border-bottom: 0; }
+    ul.plain .k { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.3rem; }
+
+    ol.pubs { list-style: none; counter-reset: pub; }
+    ol.pubs li { counter-increment: pub; position: relative; padding-left: 2.2em; margin-bottom: 20px; }
+    ol.pubs li::before { content: counter(pub) "."; position: absolute; left: 0; color: var(--muted); font-style: italic; }
+    ol.pubs .t { font-weight: 600; }
+    ol.pubs .j { font-style: italic; }
+    .note { font-size: 0.95rem; color: var(--muted); margin-top: 10px; }
+
+    table.skills { width: 100%; border-collapse: collapse; font-size: 0.97rem; }
+    table.skills th { text-align: left; font-weight: 400; font-style: italic; color: var(--muted); width: 170px; padding: 8px 24px 8px 0; vertical-align: top; }
+    table.skills td { padding: 8px 0; }
+
+    .contact p { margin-bottom: 6px; }
+
+    footer { border-top: 1px solid var(--rule); padding: 32px 0 56px; font-size: 0.85rem; color: var(--muted); text-align: center; }
+
+    @media (max-width: 600px) {
+      body { font-size: 17px; }
+      nav ul { justify-content: flex-start; }
+      header { padding: 64px 0 48px; }
+      dl.facts { grid-template-columns: 1fr; gap: 2px; }
+      dl.facts dd { margin-bottom: 12px; }
+      table.skills th, table.skills td { display: block; width: auto; padding: 0; }
+      table.skills th { padding-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 1700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="wobble1" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="4" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="wobble2" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="2" seed="11" result="n2" />
+          <feDisplacementMap in="SourceGraphic" in2="n2" scale="6" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+
+      <!-- large diagonal molecular chain, top-left to bottom-right, bleeding off both edges -->
+      <g class="ink sketch" stroke-width="2.5" opacity="0.16" filter="url(#wobble1)">
+        <line x1="-60" y1="120" x2="180" y2="260" />
+        <line x1="180" y1="260" x2="120" y2="430" />
+        <line x1="180" y1="260" x2="400" y2="220" />
+        <line x1="400" y1="220" x2="560" y2="360" />
+        <line x1="560" y1="360" x2="820" y2="330" />
+        <line x1="820" y1="330" x2="960" y2="470" />
+        <line x1="960" y1="470" x2="1000" y2="700" />
+        <line x1="1000" y1="700" x2="1260" y2="760" />
+        <line x1="120" y1="430" x2="60" y2="640" />
+      </g>
+      <g class="node sketch" stroke-width="2.5" filter="url(#wobble2)" opacity="0.22">
+        <circle cx="-60" cy="120" r="22" />
+        <circle cx="180" cy="260" r="34" />
+        <circle cx="120" cy="430" r="16" />
+        <circle cx="400" cy="220" r="14" />
+        <circle cx="560" cy="360" r="26" />
+        <circle cx="820" cy="330" r="18" />
+        <circle cx="960" cy="470" r="40" />
+        <circle cx="1000" cy="700" r="15" />
+        <circle cx="1260" cy="760" r="24" />
+        <circle cx="60" cy="640" r="12" />
+      </g>
+
+      <!-- tilted benzene-ring motifs, off-kilter and oversized, bleeding off the canvas -->
+      <g class="ink sketch" stroke-width="2" opacity="0.1" filter="url(#wobble1)">
+        <polygon transform="translate(950,120) rotate(14) scale(1.6)" points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" />
+        <polygon transform="translate(970,120) rotate(14) scale(1.15)" points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" />
+      </g>
+      <g class="ink sketch" stroke-width="2" opacity="0.09" filter="url(#wobble1)">
+        <polygon transform="translate(-40,1120) rotate(-22) scale(1.9)" points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" />
+        <polygon transform="translate(-10,1120) rotate(-22) scale(1.35)" points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" />
+      </g>
+
+      <!-- big off-axis atom with tilted electron orbitals, lower-right anchor -->
+      <g transform="translate(980,1330) rotate(-8)" opacity="0.16">
+        <ellipse class="ink" rx="230" ry="70" stroke-width="2" />
+        <ellipse class="ink" rx="230" ry="70" stroke-width="2" transform="rotate(60)" />
+        <ellipse class="ink" rx="230" ry="70" stroke-width="2" transform="rotate(120)" />
+        <circle class="ink-fill" r="16" />
+        <circle class="ink-fill" cx="228" cy="10" r="8" />
+        <circle class="ink-fill" cx="-120" cy="-190" r="7" />
+        <circle class="ink-fill" cx="115" cy="195" r="9" />
+      </g>
+
+      <!-- small satellite atom cluster, upper-left -->
+      <g transform="translate(120,760) rotate(10)" opacity="0.13">
+        <ellipse class="ink" rx="120" ry="42" stroke-width="1.8" />
+        <ellipse class="ink" rx="120" ry="42" stroke-width="1.8" transform="rotate(75)" />
+        <circle class="ink-fill" r="9" />
+        <circle class="ink-fill" cx="118" cy="6" r="5" />
+        <circle class="ink-fill" cx="-30" cy="-118" r="5" />
+      </g>
+
+      <!-- sparse ink-spatter dots for texture -->
+      <g class="ink-fill" opacity="0.14">
+        <circle cx="260" cy="60" r="3" />
+        <circle cx="310" cy="90" r="2" />
+        <circle cx="700" cy="60" r="2.5" />
+        <circle cx="1080" cy="240" r="2" />
+        <circle cx="40" cy="980" r="3" />
+        <circle cx="1150" cy="980" r="2.5" />
+        <circle cx="640" cy="1550" r="3" />
+        <circle cx="200" cy="1450" r="2" />
+        <circle cx="900" cy="1620" r="2.5" />
+      </g>
+    </svg>
+  </div>
+
+  <div class="page">
+
+    <nav>
+      <ul>
+        <li><a href="#about" target="_blank" rel="noopener">About</a></li>
+        <li><a href="#research" target="_blank" rel="noopener">Research</a></li>
+        <li><a href="#publications" target="_blank" rel="noopener">Publications</a></li>
+        <li><a href="#skills" target="_blank" rel="noopener">Skills</a></li>
+        <li><a href="#contact" target="_blank" rel="noopener">Contact</a></li>
+      </ul>
+    </nav>
+
+    <header>
+      <h1>Alina Emelianova</h1>
+      <p class="role">Postdoctoral Research Associate, Princeton University</p>
+      <p class="intro">
+        I am a computational chemist working on molecular dynamics, free energy calculations,
+        force field development, and QM/MM methods — building models that connect atomic-scale
+        physics to the behavior of real molecular systems.
+      </p>
+      <p class="quick">
+        <a href="mailto:ae3301@princeton.edu">Email</a><span class="sep">/</span>
+        <a href="cv.pdf" target="_blank" rel="noopener">CV</a><span class="sep">/</span>
+        <a href="https://scholar.google.com/citations?user=n0qOCY8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a><span class="sep">/</span>
+        <a href="https://github.com/alinaemelianova" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </header>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        I am a computational scientist trained in physics, working at the interface of computational
+        materials science, biophysics, and chemistry — currently as a postdoctoral research associate
+        in the Joseph Lab at Princeton University. There, I use molecular simulation to study how small
+        molecules partition into biomolecular condensates.
+      </p>
+      <p>
+        During my PhD, I used computational modeling of adsorption to study adsorption-induced
+        deformation in porous materials, building on undergraduate research where I ran low-temperature
+        nitrogen adsorption experiments to characterize nanoporous materials. That path — from the bench
+        to the simulation — shapes how I now think about problems: I want to leverage computation to
+        help bioengineering address disease-related challenges.
+      </p>
+      <dl class="facts">
+        <dt>Current position</dt><dd>Joseph Lab, Princeton University</dd>
+        <dt>Supercomputing</dt><dd>Principal Investigator, Anton 3 allocation, D.E. Shaw Research</dd>
+        <dt>Funding</dt><dd>Co-PI, Princeton Engineering Innovation Grant</dd>
+        <dt>Doctoral research</dt><dd>Adsorption in nanoporous materials, with Prof. Gennady Y. Gor</dd>
+        <dt>Undergraduate research</dt><dd>Nitrogen adsorption characterization of nanoporous materials</dd>
+      </dl>
+    </section>
+
+    <section id="research">
+      <h2>Research</h2>
+      <div class="entries">
+
+        <div class="entry">
+          <h3>Small molecules in biomolecular condensates</h3>
+          <p class="meta">Postdoctoral research · Joseph Lab, Princeton</p>
+          <p>
+            Biomolecular condensates are membraneless compartments that concentrate proteins and nucleic
+            acids inside cells, and they are emerging targets for drug discovery. I study how small
+            molecules partition into condensates using a multiscale simulation approach — spanning
+            all-atom molecular dynamics with enhanced sampling, coarse-grained models to reach the
+            length and time scales condensates demand, and quantum-mechanical calculations of solute
+            electronic structure — to uncover the rules that govern partitioning and predict it from
+            simulation.
+          </p>
+          <p>
+            I am extending this work using Bayesian optimization and machine-learning-assisted force field
+            development, run on Princeton's Tiger HPC cluster. <i>In progress.</i>
+          </p>
+          <figure>
+            <img src="images/toc-jacsau-2025.png" alt="Graphical abstract: prediction of small-molecule partitioning into biomolecular condensates" loading="lazy" onerror="this.closest('figure').remove()" />
+            <figcaption>Prediction of small-molecule partitioning into biomolecular condensates from simulation. <i>JACS Au</i>, 2025.</figcaption>
+          </figure>
+          <p class="refs">
+            <a href="https://doi.org/10.1021/jacsau.5c00291" target="_blank" rel="noopener"><i>JACS Au</i> 2025</a> ·
+            <a href="https://doi.org/10.1016/j.bpj.2023.11.2989" target="_blank" rel="noopener"><i>Biophys. J.</i> 2024</a>
+          </p>
+        </div>
+
+        <div class="entry">
+          <h3>Long-timescale simulation on Anton 3</h3>
+          <p class="meta">Molecular dynamics · D.E. Shaw Research</p>
+          <p>
+            I won and now lead a Principal Investigator allocation on Anton 3, the special-purpose
+            supercomputer built by D.E. Shaw Research for molecular dynamics. Anton 3's architecture is
+            designed specifically to accelerate MD, letting me run large biomolecular systems out to
+            timescales that would be impractical to reach on conventional hardware — access that shapes
+            what questions about condensate dynamics and small-molecule partitioning are within reach.
+            <!-- Add a sentence on the scientific question here. -->
+          </p>
+        </div>
+
+        <div class="entry">
+          <h3>Adsorption in nanoporous materials</h3>
+          <p class="meta">Doctoral research · with Prof. Gennady Y. Gor</p>
+          <p>
+            My doctoral work used molecular simulation, together with macroscopic theory and close
+            collaboration with experimentalists, to understand how fluids behave when confined in pores
+            only a few molecules wide — and how the pores themselves respond. The materials ranged from
+            silica and carbon to zeolites and metal–organic frameworks, including the capture of hazardous
+            chemicals: I studied the adsorption of the nerve agent sarin and its common simulants on
+            metal–organic frameworks, taking a closer look at how the agent compares with the simulants
+            commonly used in its place.
+          </p>
+
+          <h4>Adsorption-induced deformation</h4>
+          <p>
+            Fluids adsorbed in nanopores exert large solvation pressures that can strain the host solid.
+            I combined macroscopic theory with molecular simulation to calculate solvation pressure in
+            spherical mesopores, showing that it can reach hundreds of megapascals in small pores and that
+            its value at saturation gives access to the solid–liquid surface energy. I extended this to
+            zeolites 4A and 13X in a combined experimental and simulation study, and to the elastic
+            properties of fluid-saturated zeolites.
+          </p>
+          <p class="refs">
+            <a href="https://doi.org/10.1002/aic.16542" target="_blank" rel="noopener"><i>AIChE J.</i> 2021</a> ·
+            <a href="https://doi.org/10.1021/acs.langmuir.3c01248" target="_blank" rel="noopener"><i>Langmuir</i> 2023</a> ·
+            <a href="https://doi.org/10.1021/acs.jpcc.4c04839" target="_blank" rel="noopener"><i>J. Phys. Chem. C</i> 2025</a> ·
+            <a href="https://doi.org/10.1021/acsami.3c02713" target="_blank" rel="noopener"><i>ACS Appl. Mater. Interfaces</i> 2023</a>
+          </p>
+
+          <h4>Force field development</h4>
+          <p>
+            Reliable adsorption predictions depend on reliable molecular models, so alongside my adsorption
+            studies I develop and validate classical force fields — parameterizing and testing them against
+            experimental thermodynamic data. I used this approach to study the vapor–liquid equilibrium of
+            toxic organic compounds such as isocyanates, and contributed to a review of the thermodynamic
+            signatures that nanoporous materials leave on confined fluids. This is the same force field
+            development work I now extend, with machine learning, to drug-like molecules.
+          </p>
+          <p class="refs">
+            <a href="https://doi.org/10.1021/acs.jpcb.1c07132" target="_blank" rel="noopener"><i>J. Phys. Chem. B</i> 2021</a> ·
+            <a href="https://doi.org/10.1142/9789811217968_0007" target="_blank" rel="noopener">Book chapter, 2020</a>
+          </p>
+
+          <div class="figs">
+            <figure>
+              <img src="images/toc-acsami-2023.png" alt="Graphical abstract: adsorption of sarin and simulants on metal–organic frameworks" loading="lazy" onerror="this.closest('figure').remove()" />
+              <figcaption>Sarin and simulants on MOFs. <i>ACS Appl. Mater. Interfaces</i>, 2023.</figcaption>
+            </figure>
+            <figure>
+              <img src="images/toc-langmuir-2023.png" alt="Graphical abstract: adsorption-induced deformation of zeolites 4A and 13X" loading="lazy" onerror="this.closest('figure').remove()" />
+              <figcaption>Deformation of zeolites 4A and 13X. <i>Langmuir</i>, 2023.</figcaption>
+            </figure>
+            <figure>
+              <img src="images/toc-aiche-2021.png" alt="Graphical abstract: solvation pressure in spherical mesopores" loading="lazy" onerror="this.closest('figure').remove()" />
+              <figcaption>Solvation pressure in spherical mesopores. <i>AIChE J.</i>, 2021.</figcaption>
+            </figure>
+            <figure>
+              <img src="images/toc-jpcb-2021.png" alt="Graphical abstract: vapor–liquid equilibrium of isocyanates" loading="lazy" onerror="this.closest('figure').remove()" />
+              <figcaption>Vapor–liquid equilibrium of isocyanates. <i>J. Phys. Chem. B</i>, 2021.</figcaption>
+            </figure>
+            <figure>
+              <img src="images/toc-jpcc-2025.png" alt="Graphical abstract: elasticity of fluid-saturated zeolites" loading="lazy" onerror="this.closest('figure').remove()" />
+              <figcaption>Elasticity of fluid-saturated zeolites. <i>J. Phys. Chem. C</i>, 2025.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="publications">
+      <h2>Selected Publications</h2>
+      <ol class="pubs">
+        <li><span class="t"><a href="https://doi.org/10.1021/jacsau.5c00291" target="_blank" rel="noopener">Prediction of Small-Molecule Partitioning into Biomolecular Condensates from Simulation</a></span>. <b>A. Emelianova</b>, P. L. Garcia, D. Tan, J. A. Joseph. <span class="j">JACS Au</span>, 2025.</li>
+        <li><span class="t"><a href="https://doi.org/10.1021/acs.jpcc.4c04839" target="_blank" rel="noopener">Molecular Simulation Study of Elasticity of Fluid-Saturated Zeolites</a></span>. S. A. Flores Roman, <b>A. Emelianova</b>, G. Y. Gor. <span class="j">The Journal of Physical Chemistry C</span>, 2025.</li>
+        <li><span class="t"><a href="https://doi.org/10.1016/j.bpj.2023.11.2989" target="_blank" rel="noopener">Uncovering Rules Governing Small Molecule Partitioning into Condensates through Simulation</a></span>. <b>A. Emelianova</b>, J. A. Joseph. <span class="j">Biophysical Journal</span>, 2024.</li>
+        <li><span class="t"><a href="https://doi.org/10.1021/acs.langmuir.3c01248" target="_blank" rel="noopener">Adsorption-Induced Deformation of Zeolites 4A and 13X: Experimental and Molecular Simulation Study</a></span>. <b>A. Emelianova</b>, C. Balzer, G. Reichenauer, G. Y. Gor. <span class="j">Langmuir</span> 39, 11388–11397 (2023).</li>
+        <li><span class="t"><a href="https://doi.org/10.1021/acsami.3c02713" target="_blank" rel="noopener">Closer Look at Adsorption of Sarin and Simulants on Metal–Organic Frameworks</a></span>. <b>A. Emelianova</b>, A. Reed, E. A. Basharova, A. L. Kolesnikov, G. Y. Gor. <span class="j">ACS Applied Materials &amp; Interfaces</span>, 2023.</li>
+        <li><span class="t"><a href="https://doi.org/10.1021/acs.jced.2c00063" target="_blank" rel="noopener">Molecular Simulation of Benzene Adsorption in Graphitic and Amorphous Carbon Slit Pores</a></span>. E. V. Ivanova, <b>A. Emelianova</b>, A. F. Khalizov, G. Y. Gor. <span class="j">Journal of Chemical &amp; Engineering Data</span>, 2022.</li>
+        <li><span class="t"><a href="https://doi.org/10.1021/acs.jpcb.1c07132" target="_blank" rel="noopener">Molecular Simulations of Vapor–Liquid Equilibrium of Isocyanates</a></span>. <b>A. Emelianova</b>, G. Y. Gor. <span class="j">The Journal of Physical Chemistry B</span>, 2021.</li>
+        <li><span class="t"><a href="https://doi.org/10.1002/aic.16542" target="_blank" rel="noopener">Solvation Pressure in Spherical Mesopores: Macroscopic Theory and Molecular Simulations</a></span>. <b>A. Emelianova</b>, M. A. Maximov, G. Y. Gor. <span class="j">AIChE Journal</span> 67, e16542 (2021).</li>
+        <li><span class="t"><a href="https://doi.org/10.1142/9789811217968_0007" target="_blank" rel="noopener">Thermodynamic Fingerprints of Nanoporous Materials on the Fluids Confined in Their Pores</a></span>. G. Y. Gor, C. D. Dobrzanski, <b>A. Emelianova</b>. In <span class="j">Soft Matter and Biomaterials on the Nanoscale</span>, 2020.</li>
+        <li><span class="t"><a href="https://doi.org/10.1021/acs.langmuir.8b03476" target="_blank" rel="noopener">Porous Structure of Silica Colloidal Crystals</a></span>. A. Galukhin, D. Bolmatenkov, <b>A. Emelianova</b>, I. Zharov, G. Y. Gor. <span class="j">Langmuir</span>, 2019.</li>
+      </ol>
+      <p class="note">A complete list is available on <a href="https://scholar.google.com/citations?user=n0qOCY8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <table class="skills">
+        <tr><th>Methods</th><td>Molecular dynamics, free energy calculations, force field development, QM/MM</td></tr>
+        <tr><th>Programming</th><td>Python, Bash, Git</td></tr>
+        <tr><th>Machine learning</th><td>Bayesian optimization, scikit-learn</td></tr>
+        <tr><th>Visualization</th><td>PyMOL, VMD, Chimera</td></tr>
+        <tr><th>Computing</th><td>HPC clusters, Anton 3, large-scale data management</td></tr>
+      </table>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>Joseph Lab, Princeton University, Princeton, NJ</p>
+      <p><a href="mailto:ae3301@princeton.edu">ae3301@princeton.edu</a></p>
+      <p class="note">
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a><span class="sep">/</span>
+        <a href="#" target="_blank" rel="noopener">ORCID</a><span class="sep">/</span>
+        <a href="https://github.com/alinaemelianova" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </section>
+
+    <footer>© <span id="yr"></span> Alina Emelianova</footer>
+  </div>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
