@@ -66,20 +66,22 @@
     header .identity {
       display: flex;
       align-items: flex-start;
-      gap: 36px;
-    }
-    header .portrait {
-      flex: 0 0 168px;
-      width: 168px;
-      height: 168px;
-      object-fit: cover;
-      object-position: center top;
-      border: 1px solid var(--rule);
+      justify-content: space-between;
+      gap: 40px;
     }
     header .copy { flex: 1; min-width: 0; }
+    header .portrait {
+      flex: 0 0 180px;
+      width: 180px;
+      height: 220px;
+      margin-top: 6px;
+      object-fit: cover;
+      object-position: center 18%;
+      border: 1px solid var(--rule);
+    }
     header h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); line-height: 1.05; letter-spacing: -0.01em; }
     header .role { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.45rem; color: var(--muted); margin-top: 12px; }
-    header .intro { margin-top: 36px; max-width: 600px; }
+    header .intro { margin-top: 36px; }
     header .quick { margin-top: 28px; font-size: 0.95rem; color: var(--muted); }
     header .quick a { margin-right: 4px; }
     .sep { color: var(--rule); margin: 0 10px; }
@@ -138,8 +140,14 @@
       body { font-size: 17px; }
       nav ul { justify-content: flex-start; }
       header { padding: 64px 0 48px; }
-      header .identity { flex-direction: column; gap: 24px; }
-      header .portrait { width: 132px; height: 132px; flex-basis: 132px; }
+      header .identity { flex-direction: column; gap: 28px; }
+      header .portrait {
+        order: -1;
+        width: 140px;
+        height: 170px;
+        flex-basis: 140px;
+        margin-top: 0;
+      }
       dl.facts { grid-template-columns: 1fr; gap: 2px; }
       dl.facts dd { margin-bottom: 12px; }
       table.skills th, table.skills td { display: block; width: auto; padding: 0; }
@@ -245,7 +253,6 @@
 
     <header>
       <div class="identity">
-        <img class="portrait" src="images/alina.jpg" alt="Portrait of Alina Emelianova" width="168" height="168" />
         <div class="copy">
           <h1>Alina Emelianova</h1>
           <p class="role">Postdoctoral Research Associate, Princeton University</p>
@@ -263,6 +270,7 @@
             <a href="https://github.com/alinaemelianova" target="_blank" rel="noopener">GitHub</a>
           </p>
         </div>
+        <img class="portrait" src="images/alina.jpg" alt="Portrait of Alina Emelianova" width="180" height="220" />
       </div>
     </header>
 
