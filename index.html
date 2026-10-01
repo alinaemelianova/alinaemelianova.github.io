@@ -135,6 +135,85 @@
 
     .contact p { margin-bottom: 6px; }
 
+    .interest-map {
+      position: relative;
+      margin: 40px 0 8px;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      min-height: 280px;
+    }
+    .interest-map svg:first-of-type { pointer-events: none; }
+    .interest-map svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .interest-map .edge {
+      stroke: var(--rule);
+      stroke-width: 1.25;
+      fill: none;
+      transition: stroke .25s, stroke-width .25s, opacity .25s;
+    }
+    .interest-map .node {
+      cursor: pointer;
+      outline: none;
+    }
+    .interest-map .node circle {
+      fill: var(--bg);
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      transition: fill .25s, stroke-width .25s, r .25s;
+    }
+    .interest-map .node.hub circle {
+      fill: var(--accent);
+      stroke: var(--accent);
+    }
+    .interest-map .node text {
+      fill: var(--text);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: fill .25s;
+    }
+    .interest-map .node.hub text {
+      font-size: 17px;
+      font-weight: 600;
+    }
+    .interest-map .node:hover circle,
+    .interest-map .node:focus-visible circle {
+      fill: var(--accent);
+      stroke-width: 2;
+    }
+    .interest-map .node.hub:hover circle,
+    .interest-map .node.hub:focus-visible circle {
+      fill: var(--text);
+      stroke: var(--text);
+    }
+    .interest-map .node:hover text,
+    .interest-map .node:focus-visible text {
+      fill: var(--accent);
+    }
+    .interest-map.is-hot .edge { opacity: 0.28; }
+    .interest-map.is-hot .edge.is-lit {
+      opacity: 1;
+      stroke: var(--accent);
+      stroke-width: 1.75;
+    }
+    .interest-map.is-hot .node { opacity: 0.4; }
+    .interest-map.is-hot .node.is-lit { opacity: 1; }
+    .interest-map .caption {
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    [id] { scroll-margin-top: 28px; }
+
     footer { border-top: 1px solid var(--rule); padding: 32px 0 56px; font-size: 0.85rem; color: var(--muted); text-align: center; }
 
     @media (max-width: 600px) {
@@ -153,6 +232,13 @@
       dl.facts dd { margin-bottom: 12px; }
       table.skills th, table.skills td { display: block; width: auto; padding: 0; }
       table.skills th { padding-top: 12px; }
+      .interest-map {
+        aspect-ratio: 4 / 5;
+        min-height: 360px;
+        margin-bottom: 28px;
+      }
+      .interest-map .node text { font-size: 13px; }
+      .interest-map .node.hub text { font-size: 14px; }
     }
   </style>
 </head>
@@ -286,6 +372,67 @@
         to the simulation — shapes how I now think about problems: I want to leverage computation to
         help bioengineering address disease-related challenges.
       </p>
+
+      <div class="interest-map" id="interest-map" role="navigation" aria-label="Key research interests">
+        <svg viewBox="0 0 640 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <line class="edge" data-nodes="mol,ads" x1="320" y1="200" x2="92" y2="108" />
+          <line class="edge" data-nodes="mol,porous" x1="320" y1="200" x2="118" y2="300" />
+          <line class="edge" data-nodes="mol,protein" x1="320" y1="200" x2="510" y2="78" />
+          <line class="edge" data-nodes="mol,multi" x1="320" y1="200" x2="545" y2="188" />
+          <line class="edge" data-nodes="mol,stat" x1="320" y1="200" x2="490" y2="318" />
+          <line class="edge" data-nodes="mol,method" x1="320" y1="200" x2="148" y2="198" />
+          <line class="edge" data-nodes="mol,prog" x1="320" y1="200" x2="300" y2="58" />
+          <line class="edge" data-nodes="mol,soft" x1="320" y1="200" x2="350" y2="340" />
+          <line class="edge" data-nodes="ads,porous" x1="92" y1="108" x2="118" y2="300" />
+          <line class="edge" data-nodes="ads,stat" x1="92" y1="108" x2="490" y2="318" />
+          <line class="edge" data-nodes="protein,multi" x1="510" y1="78" x2="545" y2="188" />
+          <line class="edge" data-nodes="method,prog" x1="148" y1="198" x2="300" y2="58" />
+          <line class="edge" data-nodes="prog,soft" x1="300" y1="58" x2="350" y2="340" />
+          <line class="edge" data-nodes="method,stat" x1="148" y1="198" x2="490" y2="318" />
+          <line class="edge" data-nodes="porous,method" x1="118" y1="300" x2="148" y2="198" />
+        </svg>
+        <svg viewBox="0 0 640 400" preserveAspectRatio="xMidYMid meet">
+          <a class="node hub" data-id="mol" href="#research">
+            <circle cx="320" cy="200" r="7" />
+            <text x="320" y="228" text-anchor="middle">molecular simulations</text>
+          </a>
+          <a class="node" data-id="ads" href="#adsorption">
+            <circle cx="92" cy="108" r="5.5" />
+            <text x="92" y="90" text-anchor="middle">adsorption</text>
+          </a>
+          <a class="node" data-id="porous" href="#adsorption">
+            <circle cx="118" cy="300" r="5.5" />
+            <text x="118" y="324" text-anchor="middle">porous materials</text>
+            <text x="118" y="342" text-anchor="middle">&amp; pharmaceuticals</text>
+          </a>
+          <a class="node" data-id="protein" href="#condensates">
+            <circle cx="510" cy="78" r="5.5" />
+            <text x="510" y="60" text-anchor="middle">protein physics</text>
+          </a>
+          <a class="node" data-id="multi" href="#condensates">
+            <circle cx="545" cy="188" r="5.5" />
+            <text x="545" y="170" text-anchor="middle">multiscale simulations</text>
+          </a>
+          <a class="node" data-id="stat" href="#adsorption">
+            <circle cx="490" cy="318" r="5.5" />
+            <text x="490" y="342" text-anchor="middle">statistical mechanics</text>
+          </a>
+          <a class="node" data-id="method" href="#methods">
+            <circle cx="148" cy="198" r="5.5" />
+            <text x="148" y="180" text-anchor="middle">method development</text>
+          </a>
+          <a class="node" data-id="prog" href="#skills">
+            <circle cx="300" cy="58" r="5.5" />
+            <text x="300" y="40" text-anchor="middle">programming</text>
+          </a>
+          <a class="node" data-id="soft" href="#skills">
+            <circle cx="350" cy="340" r="5.5" />
+            <text x="350" y="364" text-anchor="middle">software building</text>
+          </a>
+        </svg>
+        <p class="caption">Click a node to jump to related work</p>
+      </div>
+
       <dl class="facts">
         <dt>Current position</dt><dd>Joseph Lab, Princeton University</dd>
         <dt>Supercomputing</dt><dd>Principal Investigator, Anton 3 allocation, D.E. Shaw Research</dd>
@@ -299,7 +446,7 @@
       <h2>Research</h2>
       <div class="entries">
 
-        <div class="entry">
+        <div class="entry" id="condensates">
           <h3>Small molecules in biomolecular condensates</h3>
           <p class="meta">Postdoctoral research · Joseph Lab, Princeton</p>
           <p>
@@ -325,7 +472,7 @@
           </p>
         </div>
 
-        <div class="entry">
+        <div class="entry" id="anton">
           <h3>Long-timescale simulation on Anton 3</h3>
           <p class="meta">Molecular dynamics · D.E. Shaw Research</p>
           <p>
@@ -338,7 +485,7 @@
           </p>
         </div>
 
-        <div class="entry">
+        <div class="entry" id="adsorption">
           <h3>Adsorption in nanoporous materials</h3>
           <p class="meta">Doctoral research · with Prof. Gennady Y. Gor</p>
           <p>
@@ -367,7 +514,7 @@
             <a href="https://doi.org/10.1021/acsami.3c02713" target="_blank" rel="noopener"><i>ACS Appl. Mater. Interfaces</i> 2023</a>
           </p>
 
-          <h4>Force field development</h4>
+          <h4 id="methods">Force field development</h4>
           <p>
             Reliable adsorption predictions depend on reliable molecular models, so alongside my adsorption
             studies I develop and validate classical force fields — parameterizing and testing them against
@@ -496,6 +643,45 @@
 
     <footer>© <span id="yr"></span> Alina Emelianova</footer>
   </div>
-  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    (function () {
+      const map = document.getElementById('interest-map');
+      if (!map) return;
+      const nodes = map.querySelectorAll('.node');
+      const edges = map.querySelectorAll('.edge');
+
+      function setActive(id) {
+        if (!id) {
+          map.classList.remove('is-hot');
+          edges.forEach((e) => e.classList.remove('is-lit'));
+          nodes.forEach((n) => n.classList.remove('is-lit'));
+          return;
+        }
+        map.classList.add('is-hot');
+        nodes.forEach((n) => n.classList.toggle('is-lit', n.dataset.id === id || connected(id, n.dataset.id)));
+        edges.forEach((e) => {
+          const parts = e.dataset.nodes.split(',');
+          e.classList.toggle('is-lit', parts.includes(id));
+        });
+      }
+
+      function connected(a, b) {
+        if (a === b) return true;
+        return Array.from(edges).some((e) => {
+          const parts = e.dataset.nodes.split(',');
+          return parts.includes(a) && parts.includes(b);
+        });
+      }
+
+      nodes.forEach((n) => {
+        n.addEventListener('mouseenter', () => setActive(n.dataset.id));
+        n.addEventListener('mouseleave', () => setActive(null));
+        n.addEventListener('focus', () => setActive(n.dataset.id));
+        n.addEventListener('blur', () => setActive(null));
+      });
+    })();
+  </script>
 </body>
 </html>
